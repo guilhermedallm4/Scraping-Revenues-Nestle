@@ -5,13 +5,13 @@ from bs4 import BeautifulSoup
 response = requests.get('https://www.receitasnestle.com.br/nossas-receitas')
 site = BeautifulSoup(response.text, 'html.parser')
 menu_receitas = site.findAll('h2', attrs={'class': 'title'})
-global counter_archive
-counter_archive = 0
+#global counter_archive
+#counter_archive = 0
 with open('teste_tudo.csv', 'a') as columns:
     columns.write(('"Calda Longa"') + ';')
     columns.write(('"Titulo"') + ';')
     columns.write(('"Ingrendiente"') + ';')
-    columns.write(('"Moto de Preparo"') + '\n')
+    columns.write(('"Modo de Preparo"') + '\n')
 for categorias_receitas in menu_receitas:
     titulo = categorias_receitas.text
     aux_link = str(titulo)

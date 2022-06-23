@@ -7,6 +7,11 @@ site = BeautifulSoup(response.text, 'html.parser')
 menu_receitas = site.findAll('h2', attrs={'class': 'title'})
 global counter_archive
 counter_archive = 0
+with open('teste_tudo.csv', 'a') as columns:
+    columns.write(('"Calda Longa"') + ';')
+    columns.write(('"Titulo"') + ';')
+    columns.write(('"Ingrendiente"') + ';')
+    columns.write(('"Moto de Preparo"') + '\n')
 for categorias_receitas in menu_receitas:
     titulo = categorias_receitas.text
     aux_link = str(titulo)
@@ -43,14 +48,17 @@ for categorias_receitas in menu_receitas:
                     #print('\nLink:', link_two)
                     #print('\nIngredientes:', ingred)
                     #print('\nModo de Preparo:', metd)
-                    print('\n\n')
-                    name_archive = str(counter_archive) + '.txt'
-                    print(name_archive)
-                    counter_archive += 1
-                    with open(name_archive, 'a') as title_archive:
+                    #print('\n\n')
+                    #name_archive = str(counter_archive) + '.txt'
+                    #print(name_archive)
+                    #counter_archive += 1
+                    with open('teste_tudo.csv', 'a') as title_archive:
+                            auxCaldaLonga = 'Como fazer '+ titulo.text 
+                            title_archive.write((auxCaldaLonga) + ';')
+                    with open('teste_tudo.csv', 'a') as title_archive:
                             auxTitle = titulo.text
-                            title_archive.write((auxTitle) + ',')
-                    with open(name_archive, 'a') as ingre_archive:
-                            ingre_archive.write((ingred) + ',')
-                    with open(name_archive, 'a') as preparo_archive:
-                            preparo_archive.write((metd))     
+                            title_archive.write((auxTitle) + ';')
+                    with open('teste_tudo.csv', 'a') as ingre_archive:
+                            ingre_archive.write((ingred.replace('\n',',')) + ';')
+                    with open('teste_tudo.csv', 'a') as preparo_archive:
+                            preparo_archive.write((metd.replace('\n',',')) + '\n')     

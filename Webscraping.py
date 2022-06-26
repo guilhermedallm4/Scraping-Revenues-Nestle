@@ -1,17 +1,16 @@
-
 import requests
 from bs4 import BeautifulSoup
 
 response = requests.get('https://www.receitasnestle.com.br/nossas-receitas')
 site = BeautifulSoup(response.text, 'html.parser')
 menu_receitas = site.findAll('h2', attrs={'class': 'title'})
-#global counter_archive
-#counter_archive = 0
-with open('teste_tudo.csv', 'a') as columns:
-    columns.write(('"Calda Longa"') + ';')
-    columns.write(('"Titulo"') + ';')
-    columns.write(('"Ingrendiente"') + ';')
-    columns.write(('"Modo de Preparo"') + '\n')
+global counter_archive
+counter_archive = 0
+with open('receitas_two.csv', 'a', encoding="UTF-8") as columns:
+    columns.write(('"calda_longa"') + ',')
+    columns.write(('"titulo"') + ',')
+    columns.write(('"ingrediente"') + ',')
+    columns.write(('"modo_de_preparo"') + '\n')
 for categorias_receitas in menu_receitas:
     titulo = categorias_receitas.text
     aux_link = str(titulo)
@@ -52,13 +51,17 @@ for categorias_receitas in menu_receitas:
                     #name_archive = str(counter_archive) + '.txt'
                     #print(name_archive)
                     #counter_archive += 1
-                    with open('teste_tudo.csv', 'a') as title_archive:
+                    print(metd)
+                    auxMetodo = (metd.replace(',',''))
+                    print('\n')
+                    print(auxMetodo)
+                    with open('receitas_two.csv', 'a', encoding="UTF-8") as title_archive:
                             auxCaldaLonga = 'Como fazer '+ titulo.text 
-                            title_archive.write((auxCaldaLonga) + ';')
-                    with open('teste_tudo.csv', 'a') as title_archive:
+                            title_archive.write('<h1>' + (auxCaldaLonga) +'</h1>'+ ',')
+                    with open('receitas_two.csv', 'a', encoding="UTF-8") as title_archive:
                             auxTitle = titulo.text
-                            title_archive.write((auxTitle) + ';')
-                    with open('teste_tudo.csv', 'a') as ingre_archive:
-                            ingre_archive.write((ingred.replace('\n',',')) + ';')
-                    with open('teste_tudo.csv', 'a') as preparo_archive:
-                            preparo_archive.write((metd.replace('\n',',')) + '\n')     
+                            title_archive.write('<h2>'+(auxTitle) +'</h2>' ',')
+                    with open('receitas_two.csv', 'a', encoding="UTF-8") as ingre_archive:
+                            ingre_archive.write('<p>' + (ingred.replace('\n','<br>')) +'</p>' + ',')
+                    with open('receitas_two.csv', 'a', encoding="UTF-8") as preparo_archive:
+                            preparo_archive.write('<p>' + (auxMetodo.replace('\n', '<br>')) +'</p>' + '\n')     
